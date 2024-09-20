@@ -4,8 +4,15 @@ const fs = require("fs");
 const { S3Client, PutObjectCommand } = require("@aws-sdk/client-s3")
 const mime = require("mime-types");
 
+const AWS_ACCESS_KEY_ID = process.env.AWS_ACCESS_KEY_ID;
+const AWS_SECRET_ACCESS_KEY = process.env.AWS_SECRET_ACCESS_KEY;
+
 const s3Client = new S3Client({
   region: "ap-south-1",
+  credentials : {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  }
 });
 
 const PROJECT_ID = process.env.PROJECT_ID;
@@ -42,6 +49,6 @@ async function init() {
       })
       await s3Client.send(command)
     }
-    console.log("Deployment to S3 completed");
+    console.log("Deployment to S3 completed...");
   });
 }
